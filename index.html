@@ -13,7 +13,7 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-fuchsia-50 text-slate-600">
+<body class="bg-fuchsia-50 text-slate-600 relative">
 
     <!-- Top Utility Bar -->
     <div class="bg-pink-400 text-white text-xs py-2">
@@ -26,8 +26,8 @@
             <div>
                 <span>Currencies: </span>
                 <select class="bg-white text-slate-600 rounded px-1 py-0.5 outline-none">
+                    <option>KES</option>
                     <option>USD</option>
-                    <option>EUR</option>
                 </select>
             </div>
         </div>
@@ -47,11 +47,11 @@
                 <button class="bg-slate-600 text-white px-4 md:px-6 py-2 rounded-r hover:bg-slate-700 transition text-sm">Search</button>
             </div>
 
-            <!-- Cart Summary -->
-            <div class="bg-fuchsia-50 p-2 md:p-3 rounded border border-slate-200 text-sm text-right w-full md:w-auto flex md:block justify-between items-center">
+            <!-- Cart Summary (Added cursor-pointer and hover effect) -->
+            <div class="bg-fuchsia-50 p-2 md:p-3 rounded border border-slate-200 text-sm text-right w-full md:w-auto flex md:block justify-between items-center cursor-pointer hover:bg-fuchsia-100 transition shadow-sm" id="cart-trigger">
                 <span class="font-semibold text-slate-700 md:block">CART:</span>
                 <div>
-                    <span id="cart-count" class="text-pink-500 font-bold">0</span> item(s) - $<span id="cart-total">0.00</span>
+                    <span id="cart-count" class="text-pink-500 font-bold">0</span> item(s) - KES <span id="cart-total">0</span>
                 </div>
             </div>
         </div>
@@ -78,7 +78,6 @@
                 <p class="text-xl md:text-2xl mb-4 text-slate-500">GET UP TO <span class="text-pink-400 font-bold text-3xl md:text-4xl block mt-1">50% OFF</span></p>
                 <button class="mt-2 md:mt-4 bg-transparent border-b-2 border-slate-600 text-slate-600 font-semibold hover:text-pink-400 hover:border-pink-400 transition pb-1">SHOP NOW!</button>
             </div>
-            <!-- Placeholder for Hero Image -->
             <div class="w-full md:absolute md:right-0 md:top-0 md:w-1/2 h-48 md:h-full bg-sky-200 order-1 md:order-2">
                 <!-- Replace with actual handbag lifestyle image -->
             </div>
@@ -101,8 +100,8 @@
                 </div>
             </div>
             <div class="bg-pink-400 text-white p-6 rounded shadow-sm text-center flex flex-col justify-center py-8">
-                <h3 class="text-xl md:text-2xl font-bold">FREE SHIPPING</h3>
-                <p class="text-xs mt-1 text-pink-100">ON ORDERS OVER $99</p>
+                <h3 class="text-xl md:text-2xl font-bold">FREE DELIVERY</h3>
+                <p class="text-xs mt-1 text-pink-100">ON ORDERS OVER KES 10,000</p>
             </div>
         </section>
 
@@ -110,27 +109,9 @@
         <section>
             <h2 class="text-lg border-b border-slate-300 pb-2 mb-6 font-semibold">Featured products</h2>
             
-            <!-- Product Grid -->
+            <!-- Product Grid Container (Waiting for JS) -->
             <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                
-                <!-- Example Product Card -->
-                <div class="bg-white p-4 rounded shadow-sm relative group hover:shadow-md transition">
-                    <div class="absolute top-2 right-2 bg-pink-400 text-white text-[10px] font-bold px-2 py-4 rounded-sm" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);">SALE[...]
-                    <div class="h-48 bg-fuchsia-50 mb-4 rounded flex items-center justify-center">
-                        <span class="text-slate-300 text-sm">Image</span>
-                    </div>
-                    <h4 class="text-pink-400 font-semibold text-sm truncate">An Exquisite Beaded Evening...</h4>
-                    <p class="text-xs text-slate-400 mt-1 line-clamp-2">What we sell are not just simple handbags, the products of our shop...</p>
-                    <div class="mt-3 flex items-baseline space-x-2">
-                        <span class="text-slate-700 font-bold">$ 99.00</span>
-                        <span class="text-slate-400 text-xs line-through">$ 130.00</span>
-                    </div>
-                    <div class="mt-4 flex space-x-2">
-                        <button class="bg-slate-600 text-white text-xs px-3 py-2 rounded flex-1 hover:bg-slate-700 transition">Add to cart</button>
-                        <button class="border border-slate-300 text-slate-600 text-xs px-3 py-2 rounded hover:border-pink-400 hover:text-pink-400 transition">View</button>
-                    </div>
-                </div>
-
+                <!-- Javascript will inject cards here -->
             </div>
         </section>
     </main>
@@ -173,12 +154,10 @@
         </div>
     </footer>
 
-<!-- Add this right above </body> -->
-
     <!-- Checkout Modal (Hidden by default) -->
     <div id="checkout-modal" class="fixed inset-0 bg-slate-900 bg-opacity-50 hidden flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg shadow-lg p-8 w-96 relative">
-            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-slate-400 hover:text-pink-400">&times;</button>
+        <div class="bg-white rounded-lg shadow-lg p-8 w-96 relative mx-4">
+            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-slate-400 hover:text-pink-400 text-2xl leading-none">&times;</button>
             <div class="text-center mb-6">
                 <div class="bg-green-100 text-green-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">M</div>
                 <h3 class="text-xl font-bold text-slate-700">Lipa na M-Pesa</h3>
@@ -198,6 +177,7 @@
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="script.js"></script>
 </body>
-</html>
+                    </html>
