@@ -93,7 +93,7 @@ function renderProducts() {
 
         // Handle conditional sale badge display
         const saleBadgeHTML = product.isOnSale
-            ? `<div class="absolute top-2 right-2 bg-pink-400 text-white text-[10px] font-bold px-2 py-4 rounded-sm z-10" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);">SALE</div>`
+            ? `<div class="absolute top-2 right-2 bg-pink-400 text-white text-[10px] font-bold px-2 py-4 rounded-sm z-10" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);">SALE[...]
             : '';
 
         // Construct the card HTML
@@ -123,7 +123,102 @@ function renderProducts() {
 // 3. Initialize the render when the page loads
 document.addEventListener('DOMContentLoaded', renderProducts);
 
-// Placeholder for Phase 3 function
+// Phase 3: Cart Management & Safaricom Checkout
+
+let cart = [];
+
 function addToCart(productId) {
-    console.log(`Product ${productId} added to cart!`);
-  }
+    const product = products.find(p => p.id === productId);
+    const existingItem = cart.find(item => item.id === productId);
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        // Assume KES conversion for the simulation (price * 130)
+        cart.push({ ...product, quantity: 1, kesPrice: product.price * 130 });
+    }
+
+    updateCartUI();
+}
+
+function updateCartUI() {
+    const cartCount = document.getElementById('cart-count');
+    const cartTotal = document.getElementById('cart-total');
+    
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = cart.reduce((sum, item) => sum + (item.kesPrice * item.quantity), 0);
+
+    cartCount.innerText = totalItems;
+    // Format to local currency string
+    cartTotal.innerText = totalPrice.toLocaleString();
+}
+
+// Open checkout when clicking the cart in the header
+const cartHeaderElement = document.querySelector('header .bg-fuchsia-50');
+if (cartHeaderElement) {
+    cartHeaderElement.addEventListener('click', () => {
+        if (cart.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+        const totalPrice = cart.reduce((sum, item) => sum + (item.kesPrice * item.quantity), 0);
+        const modalTotal = document.getElementById('modal-total');
+        if (modalTotal) modalTotal.innerText = totalPrice.toLocaleString();
+        const checkoutModal = document.getElementById('checkout-modal');
+        if (checkoutModal) checkoutModal.classList.remove('hidden');
+    });
+}
+
+function closeCheckout() {
+    const checkoutModal = document.getElementById('checkout-modal');
+    if (checkoutModal) checkoutModal.classList.add('hidden');
+    resetCheckoutUI();
+}
+
+function resetCheckoutUI() {
+    const paymentForm = document.getElementById('payment-form');
+    const paymentStatus = document.getElementById('payment-status');
+    const phoneInput = document.getElementById('phone-number');
+
+    if (paymentForm) paymentForm.classList.remove('hidden');
+    if (paymentStatus) paymentStatus.classList.add('hidden');
+    if (phoneInput) phoneInput.value = '';
+}
+
+function simulateSTKPush() {
+    const phoneInput = document.getElementById('phone-number');
+    const phone = phoneInput ? phoneInput.value : '';
+    if (!phone || phone.replace(/\D/g, '').length < 10) {
+        alert("Please enter a valid 10-digit phone number.");
+        return;
+    }
+
+    const form = document.getElementById('payment-form');
+    const status = document.getElementById('payment-status');
+    
+    if (form) form.classList.add('hidden');
+    if (status) status.classList.remove('hidden');
+
+    // Step 1: Processing
+    if (status) status.innerHTML = `<p class="text-slate-600 font-semibold animate-pulse">Initiating STK Push...</p>`;
+
+    // Step 2: Awaiting PIN
+    setTimeout(() => {
+        if (status) status.innerHTML = `<p class="text-blue-600 font-semibold">Check your phone ( ${phone} ) and enter your M-Pesa PIN.</p>`;
+    }, 2000);
+
+    // Step 3: Success & Cart Clear
+    setTimeout(() => {
+        if (status) {
+            status.innerHTML = `
+                <div class="text-green-500 text-4xl mb-2">✓</div>
+                <p class="text-green-600 font-bold text-lg">Payment Successful!</p>
+                <p class="text-sm text-slate-500 mt-2">Transaction ID: ${Math.random().toString(36).substring(2, 10).toUpperCase()}</p>
+            `;
+        }
+        cart = []; // Clear the cart
+        updateCartUI(); // Reset header numbers
+        
+        setTimeout(closeCheckout, 4000); // Auto-close modal after 4 seconds
+    }, 6000);
+}
