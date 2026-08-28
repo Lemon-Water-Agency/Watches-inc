@@ -115,7 +115,7 @@
                 
                 <!-- Example Product Card -->
                 <div class="bg-white p-4 rounded shadow-sm relative group hover:shadow-md transition">
-                    <div class="absolute top-2 right-2 bg-pink-400 text-white text-[10px] font-bold px-2 py-4 rounded-sm" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);">SALE</div>
+                    <div class="absolute top-2 right-2 bg-pink-400 text-white text-[10px] font-bold px-2 py-4 rounded-sm" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);">SALE[...]
                     <div class="h-48 bg-fuchsia-50 mb-4 rounded flex items-center justify-center">
                         <span class="text-slate-300 text-sm">Image</span>
                     </div>
@@ -174,6 +174,30 @@
     </footer>
 
 <!-- Add this right above </body> -->
+
+    <!-- Checkout Modal (Hidden by default) -->
+    <div id="checkout-modal" class="fixed inset-0 bg-slate-900 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg p-8 w-96 relative">
+            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-slate-400 hover:text-pink-400">&times;</button>
+            <div class="text-center mb-6">
+                <div class="bg-green-100 text-green-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">M</div>
+                <h3 class="text-xl font-bold text-slate-700">Lipa na M-Pesa</h3>
+                <p class="text-sm text-slate-500 mt-1">Paybill: 123456 | Acc: Handbags</p>
+                <p class="text-lg font-bold text-slate-800 mt-2">Total: KES <span id="modal-total">0</span></p>
+            </div>
+            
+            <div id="payment-form">
+                <label class="block text-sm font-semibold text-slate-600 mb-2">Safaricom Phone Number</label>
+                <input type="text" id="phone-number" placeholder="e.g. 0712345678" class="w-full border border-slate-300 px-4 py-2 rounded mb-4 focus:outline-none focus:border-green-400">
+                <button onclick="simulateSTKPush()" class="w-full bg-green-500 text-white font-bold py-3 rounded hover:bg-green-600 transition">Send Prompt</button>
+            </div>
+
+            <div id="payment-status" class="hidden text-center py-4">
+                <!-- Status content injected by JS -->
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
