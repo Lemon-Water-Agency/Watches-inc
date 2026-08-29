@@ -67,17 +67,16 @@ loader.load(
                 // Target the specific broken glass material by name
                 if (child.material.name === 'Material.000') {
                     // Create a realistic physical glass material
-                    const newGlassMaterial = new THREE.MeshPhysicalMaterial({
-                        color: 0xffffff,
-                        metalness: 0.1,
-                        roughness: 0.0,
-                        transmission: 1.0, // This makes it act like glass
-                        ior: 1.5,          // Index of Refraction for glass
-                        thickness: 0.1,    // Refraction thickness
-                        transparent: true,
-                        opacity: 1.0,
-                        envMapIntensity: 1.5 // Boost reflections on the glass
-                    });
+                    // Replace the previous broken material
+const newGlassMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff,
+    metalness: 0.1,
+    roughness: 0.0,
+    transparent: true,  // Enable classic transparency
+    opacity: 0.15,      // Very low opacity to see the dial clearly
+    depthWrite: false,  // CRITICAL: Prevents the glass from z-fighting with the dial behind it
+    envMapIntensity: 2.5 // Crank up the reflections to maintain the "glassy" look
+});
                     
                     // Replace the broken material
                     child.material = newGlassMaterial;
