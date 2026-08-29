@@ -52,8 +52,7 @@ loader.load(
     (gltf) => {
         watchModel = gltf.scene;
         
-        // Ensure scale and position match what you dialed in previously
-        const scaleFactor = 40; 
+        const scaleFactor = 30; 
         watchModel.scale.set(scaleFactor, scaleFactor, scaleFactor); 
         watchModel.position.set(0, -0.5, 0); 
         
@@ -61,12 +60,32 @@ loader.load(
         watchModel.rotation.y = -Math.PI / 12; 
         watchModel.rotation.z = Math.PI / 24; 
 
-        // 4. MESH TRAVERSAL (Failsafe for glass opacity)
+        // --- NEW MATERIAL OVERRIDE LOGIC ---
         watchModel.traverse((child) => {
             if (child.isMesh && child.material) {
-                // Ensure materials read environment lighting properly
-                child.material.envMapIntensity = 1.0;
-                child.material.needsUpdate = true;
+                
+                // Target the specific broken glass material by name
+                if (child.material.name === 'Material.000') {
+                    // Create a realistic physical glass material
+                    const newGlassMaterial = new THREE.MeshPhysicalMaterial({
+                        color: 0xffffff,
+                        metalness: 0.1,
+                        roughness: 0.0,
+                        transmission: 1.0, // This makes it act like glass
+                        ior: 1.5,          // Index of Refraction for glass
+                        thickness: 0.1,    // Refraction thickness
+                        transparent: true,
+                        opacity: 1.0,
+                        envMapIntensity: 1.5 // Boost reflections on the glass
+                    });
+                    
+                    // Replace the broken material
+                    child.material = newGlassMaterial;
+                } else {
+                    // Ensure metal and dial materials read environment lighting properly
+                    child.material.envMapIntensity = 1.0;
+                    child.material.needsUpdate = true;
+                }
             }
         });
 
