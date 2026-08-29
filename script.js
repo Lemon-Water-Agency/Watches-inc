@@ -54,20 +54,31 @@ controls.autoRotateSpeed = 1.0;
 const loader = new GLTFLoader();
 let watchModel;
 
+
+
 loader.load(
-    'assets/models/invicta_watch.glb', // Matches your exact file path
+    'assets/models/invicta_watch.glb',
     (gltf) => {
         watchModel = gltf.scene;
         
-        // 🚨 IMPORTANT: Scale and position often need tweaking depending on how the model was exported from Blender
-        watchModel.scale.set(7, 7, 7); 
-        watchModel.position.set(0, 0, 0);
+        // 1. Drastically increase the scale (x, y, z)
+        // Adjust these numbers up or down until it looks perfect
+        const scaleFactor = 30; 
+        watchModel.scale.set(scaleFactor, scaleFactor, scaleFactor); 
         
-        // Tilt the watch slightly so the face is visible
-        watchModel.rotation.x = Math.PI / 8; 
+        // 2. Adjust Position (x, y, z)
+        // Slightly lower the watch if it covers too much of the top text
+        watchModel.position.set(0, -0.5, 0); 
+        
+        // 3. Dynamic Rotation
+        // Tilt it so the watch face looks directly at the user, with a slight dynamic angle
+        watchModel.rotation.x = Math.PI / 6; // Tilts face forward
+        watchModel.rotation.y = -Math.PI / 12; // Slight twist to the left
+        watchModel.rotation.z = Math.PI / 24; // Slight roll
 
         scene.add(watchModel);
     },
+   
     (xhr) => {
         // Logs loading progress to the console
         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
