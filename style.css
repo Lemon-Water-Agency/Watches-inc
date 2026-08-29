@@ -1,1 +1,82 @@
+/* --- CSS Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f9fa; /* Off-white background */
+    overflow-x: hidden;
+}
+
+/* --- Core Layout --- */
+.hero-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero-text-wrapper {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+    /* Crucial: Prevents text from capturing mouse clicks meant for the 3D watch */
+    pointer-events: none; 
+}
+
+/* --- Z-Index Layering --- */
+.background-text { z-index: 1; }
+.hero-canvas-wrapper { z-index: 2; }
+.foreground-text { z-index: 3; }
+
+/* --- Typography --- */
+.hero-title {
+    font-size: 13vw; /* Scales dynamically with the screen width */
+    font-weight: 900;
+    line-height: 0.9;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+    margin-bottom: 20px;
+}
+
+/* The Magic Trick: Transparent fill, solid border */
+.hero-title.outline {
+    color: transparent;
+    -webkit-text-stroke: 2px #1a1a1a;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+.hero-subtitle.transparent {
+    color: transparent; /* Hides the subtitle on the foreground layer */
+}
+
+/* --- Canvas Positioning --- */
+.hero-canvas-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#watch-canvas {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    display: block;
+}
