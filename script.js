@@ -52,7 +52,7 @@ loader.load(
     (gltf) => {
         watchModel = gltf.scene;
         
-        const scaleFactor = 30; 
+        const scaleFactor = 50; 
         watchModel.scale.set(scaleFactor, scaleFactor, scaleFactor); 
         watchModel.position.set(0, -0.5, 0); 
         
