@@ -36,13 +36,27 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(5, 5, 5);
 scene.add(directionalLight);
 
+// ==========================================
+// 3. User Controls
+// ==========================================
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true; 
 controls.dampingFactor = 0.05;
 controls.enablePan = false;    
 controls.enableZoom = false;   
-controls.autoRotate = true;    
-controls.autoRotateSpeed = 1.0; 
+
+// --- NEW: RESTRICT ROTATION ANGLES ---
+// 1. Horizontal (Azimuth) Limits: Lock to a 90-degree front cone
+controls.minAzimuthAngle = -Math.PI / 4; // -45 degrees
+controls.maxAzimuthAngle = Math.PI / 4;  // 45 degrees
+
+// 2. Vertical (Polar) Limits: Prevent looking straight over the top/bottom
+controls.minPolarAngle = Math.PI / 3;        // ~60 degrees from top
+controls.maxPolarAngle = Math.PI / 2 + 0.2;  // Just below the equator
+
+// Turn OFF default autoRotate, as it will get stuck against the new limits
+controls.autoRotate = false;
+
 
 const loader = new GLTFLoader();
 let watchModel;
@@ -100,9 +114,24 @@ window.addEventListener('resize', () => {
     renderer.setSize(container.clientWidth, container.clientHeight);
 });
 
+// ==========================================
+// 6. Animation Loop
+// ==========================================
 function animate() {
     requestAnimationFrame(animate);
+    
+    // Apply a gentle, continuous swaying motion to the model
+    if (watchModel) {
+        const time = Date.now() * 0.001; // Elapsed time in seconds
+        
+        // Sway the Y-axis (left to right) smoothly
+        // Multipliers control the speed and the width of the swing
+        watchModel.rotation.y = Math.sin(time * 0.5) * 0.4 - (Math.PI / 12);
+        
+        // Optional: Add a very slight floating effect on the Y position
+        watchModel.position.y = Math.sin(time * 1.2) * 0.05 - 0.5;
+    }
+
     controls.update(); 
     renderer.render(scene, camera);
 }
-animate();
