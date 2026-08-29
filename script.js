@@ -60,7 +60,7 @@ loader.load(
         watchModel = gltf.scene;
         
         // 🚨 IMPORTANT: Scale and position often need tweaking depending on how the model was exported from Blender
-        watchModel.scale.set(1, 1, 1); 
+        watchModel.scale.set(7, 7, 7); 
         watchModel.position.set(0, 0, 0);
         
         // Tilt the watch slightly so the face is visible
