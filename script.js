@@ -63,7 +63,7 @@ loader.load(
         
         // 1. Drastically increase the scale (x, y, z)
         // Adjust these numbers up or down until it looks perfect
-        const scaleFactor = 30; 
+        const scaleFactor = 40; 
         watchModel.scale.set(scaleFactor, scaleFactor, scaleFactor); 
         
         // 2. Adjust Position (x, y, z)
