@@ -1,131 +1,75 @@
-// Phase 2: Data Architecture & Dynamic Rendering
+// Overhauled Data Architecture & Bento Rendering
 
-// 1. The Product Database (Mock Data)
 const products = [
-    {
-        id: 1,
-        name: "An Exquisite Beaded Evening Bag",
-        description: "What we sell are not just simple handbags, the products of our shop are a statement piece for your evening attire.",
-        price: 99.00,
-        originalPrice: 130.00,
-        isOnSale: true,
-        imageUrl: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-        id: 2,
-        name: "ArtisanStreet's Carpet Bag",
-        description: "We are proud to present you the largest choice of handbags on the web. Crafted with intricate carpet-style threading.",
-        price: 60.00,
-        originalPrice: null,
-        isOnSale: false,
-        imageUrl: "https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-        id: 3,
-        name: "ArtisanStreet's Wildlife Tapestry",
-        description: "Here you can find a great number of different goods. Our store offers stylish, premium quality animal print designs.",
-        price: 78.00,
-        originalPrice: null,
-        isOnSale: false,
-        imageUrl: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-        id: 4,
-        name: "Boyt Edge Designer Carpet Bag",
-        description: "Our store offers stylish, premium quality handbags at the lowest possible prices. Perfect for weekend getaways.",
-        price: 199.00,
-        originalPrice: 210.00,
-        isOnSale: true,
-        imageUrl: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-        id: 5,
-        name: "Brooklyn Heights Stevie",
-        description: "We have a perfect reputation and great experience in this sphere, delivering classic navy silhouettes.",
-        price: 40.00,
-        originalPrice: null,
-        isOnSale: false,
-        imageUrl: "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-        id: 6,
-        name: "Chanel Classic Flap Caviar",
-        description: "What we sell are not just simple handbags, the products of our shop are a part of fashion history.",
-        price: 170.00,
-        originalPrice: null,
-        isOnSale: false,
-        imageUrl: "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-        id: 7,
-        name: "Dakine Girls Messenger Laptop",
-        description: "We know how important it is for the modern women to have several interesting and trendy bags for work and play.",
-        price: 120.00,
-        originalPrice: 190.00,
-        isOnSale: true,
-        imageUrl: "https://images.unsplash.com/photo-1628149462151-511bb7eb7e31?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-        id: 8,
-        name: "Double Pocket Canvas Tote",
-        description: "Nowadays fashion is an integral part of the culture and social relations. A practical and stylish daily driver.",
-        price: 165.00,
-        originalPrice: null,
-        isOnSale: false,
-        imageUrl: "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?q=80&w=600&auto=format&fit=crop"
-    }
+    { id: 1, name: "Evening Beaded", kesPrice: 12870, originalPrice: 16900, isOnSale: true, imageUrl: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?q=80&w=800&auto=format&fit=crop" },
+    { id: 2, name: "Carpet Craft", kesPrice: 7800, originalPrice: null, isOnSale: false, imageUrl: "https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=800&auto=format&fit=crop" },
+    { id: 3, name: "Wildlife Tapestry", kesPrice: 10140, originalPrice: null, isOnSale: false, imageUrl: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=800&auto=format&fit=crop" },
+    { id: 4, name: "Designer Edge", kesPrice: 25870, originalPrice: 27300, isOnSale: true, imageUrl: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=800&auto=format&fit=crop" },
+    { id: 5, name: "Brooklyn Stevie", kesPrice: 5200, originalPrice: null, isOnSale: false, imageUrl: "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?q=80&w=800&auto=format&fit=crop" },
+    { id: 6, name: "Classic Flap", kesPrice: 22100, originalPrice: null, isOnSale: false, imageUrl: "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?q=80&w=800&auto=format&fit=crop" },
+    { id: 7, name: "Dakine Messenger", kesPrice: 15600, originalPrice: 24700, isOnSale: true, imageUrl: "https://images.unsplash.com/photo-1628149462151-511bb7eb7e31?q=80&w=800&auto=format&fit=crop" },
+    { id: 8, name: "Canvas Tote", kesPrice: 21450, originalPrice: null, isOnSale: false, imageUrl: "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?q=80&w=800&auto=format&fit=crop" }
 ];
 
-// 2. Dynamic Rendering Function
+// Define the bento box structure (how many rows/cols each item takes)
+const bentoClasses = [
+    "md:col-span-2 md:row-span-2", // 1. Large Feature Square
+    "md:col-span-1 md:row-span-1", // 2. Standard Square
+    "md:col-span-1 md:row-span-1", // 3. Standard Square
+    "md:col-span-2 md:row-span-1", // 4. Wide Rectangle
+    "md:col-span-1 md:row-span-2", // 5. Tall Portrait Rectangle
+    "md:col-span-1 md:row-span-1", // 6. Standard Square
+    "md:col-span-2 md:row-span-1", // 7. Wide Rectangle
+    "md:col-span-2 md:row-span-1"  // 8. Wide Rectangle
+];
+
+let cart = [];
+
 function renderProducts() {
-    const productGrid = document.getElementById('product-grid');
-    
-    // Clear out the hardcoded HTML placeholder
-    productGrid.innerHTML = '';
+    const grid = document.getElementById('bento-grid');
+    grid.innerHTML = '';
 
-    // Loop through the data and build HTML for each item
-    products.forEach(product => {
-        // Handle conditional sale pricing display
-        const priceHTML = product.isOnSale 
-            ? `<span class="text-slate-700 font-bold">$ ${product.price.toFixed(2)}</span>
-               <span class="text-slate-400 text-xs line-through">$ ${product.originalPrice.toFixed(2)}</span>`
-            : `<span class="text-slate-700 font-bold">$ ${product.price.toFixed(2)}</span>`;
+    products.forEach((product, index) => {
+        // Assign bento class based on index (loops if more products than classes)
+        const gridClass = bentoClasses[index % bentoClasses.length];
+        
+        const priceDisplay = product.isOnSale 
+            ? `<span class="text-white font-bold text-lg">KES ${product.kesPrice.toLocaleString()}</span>
+               <span class="text-white/60 text-sm line-through ml-2">KES ${product.originalPrice.toLocaleString()}</span>`
+            : `<span class="text-white font-bold text-lg">KES ${product.kesPrice.toLocaleString()}</span>`;
 
-        // Handle conditional sale badge display
-        const saleBadgeHTML = product.isOnSale
-            ? `<div class="absolute top-2 right-2 bg-pink-400 text-white text-[10px] font-bold px-2 py-4 rounded-sm z-10" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);">SALE[...]
+        const saleTag = product.isOnSale
+            ? `<div class="absolute top-4 left-4 bg-slate-900 text-white text-[10px] uppercase font-black tracking-widest px-3 py-1.5 rounded-full z-20">Sale</div>`
             : '';
 
-        // Construct the card HTML
         const cardHTML = `
-            <div class="bg-white p-4 rounded shadow-sm relative group hover:shadow-md transition flex flex-col h-full">
-                ${saleBadgeHTML}
-                <div class="h-48 bg-fuchsia-50 mb-4 rounded flex items-center justify-center overflow-hidden">
-                    <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                </div>
-                <h4 class="text-pink-400 font-semibold text-sm truncate" title="${product.name}">${product.name}</h4>
-                <p class="text-xs text-slate-400 mt-1 line-clamp-2 flex-grow">${product.description}</p>
-                <div class="mt-3 flex items-baseline space-x-2">
-                    ${priceHTML}
-                </div>
-                <div class="mt-4 flex space-x-2">
-                    <button class="bg-slate-600 text-white text-xs px-3 py-2 rounded flex-1 hover:bg-slate-700 transition" onclick="addToCart(${product.id})">Add to cart</button>
-                    <button class="border border-slate-300 text-slate-600 text-xs px-3 py-2 rounded hover:border-pink-400 hover:text-pink-400 transition">View</button>
+            <div class="relative rounded-3xl overflow-hidden group shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-end ${gridClass}">
+                ${saleTag}
+                
+                <!-- Background Image -->
+                <img src="${product.imageUrl}" alt="${product.name}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out z-0">
+                
+                <!-- Gradient Overlay for Text Readability -->
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent z-10 opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <!-- Content Details -->
+                <div class="relative z-20 p-6 md:p-8 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                    <h3 class="text-white font-bold text-xl md:text-2xl leading-tight mb-2 tracking-tight">${product.name}</h3>
+                    <div class="flex justify-between items-end mt-4">
+                        <div>${priceDisplay}</div>
+                        <!-- Add to Cart Button inside the card -->
+                        <button onclick="addToCart(${product.id})" class="bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-slate-900 rounded-full w-12 h-12 flex items-center justify-center transition-all duration-300 shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         `;
-
-        // Inject into the grid container
-        productGrid.insertAdjacentHTML('beforeend', cardHTML);
+        grid.insertAdjacentHTML('beforeend', cardHTML);
     });
 }
 
-// 3. Initialize the render when the page loads
-document.addEventListener('DOMContentLoaded', renderProducts);
-
-// Phase 3: Cart Management & Safaricom Checkout
-
-let cart = [];
+// --- Cart & Checkout Logic (Maintained from Phase 3) ---
 
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
@@ -134,61 +78,47 @@ function addToCart(productId) {
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        // Assume KES conversion for the simulation (price * 130)
-        cart.push({ ...product, quantity: 1, kesPrice: product.price * 130 });
+        cart.push({ ...product, quantity: 1 });
     }
-
     updateCartUI();
 }
 
 function updateCartUI() {
     const cartCount = document.getElementById('cart-count');
-    const cartTotal = document.getElementById('cart-total');
-    
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const totalPrice = cart.reduce((sum, item) => sum + (item.kesPrice * item.quantity), 0);
-
+    
     cartCount.innerText = totalItems;
-    // Format to local currency string
-    cartTotal.innerText = totalPrice.toLocaleString();
+    
+    // Add a tiny animation bump to the cart when an item is added
+    const cartBtn = document.getElementById('cart-trigger');
+    cartBtn.classList.add('scale-110', 'bg-slate-800');
+    setTimeout(() => cartBtn.classList.remove('scale-110', 'bg-slate-800'), 200);
 }
 
-// Open checkout when clicking the cart in the header
-const cartHeaderElement = document.querySelector('header .bg-fuchsia-50');
-if (cartHeaderElement) {
-    cartHeaderElement.addEventListener('click', () => {
-        if (cart.length === 0) {
-            alert("Your cart is empty!");
-            return;
-        }
-        const totalPrice = cart.reduce((sum, item) => sum + (item.kesPrice * item.quantity), 0);
-        const modalTotal = document.getElementById('modal-total');
-        if (modalTotal) modalTotal.innerText = totalPrice.toLocaleString();
-        const checkoutModal = document.getElementById('checkout-modal');
-        if (checkoutModal) checkoutModal.classList.remove('hidden');
-    });
-}
+document.getElementById('cart-trigger').addEventListener('click', () => {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+    const totalPrice = cart.reduce((sum, item) => sum + (item.kesPrice * item.quantity), 0);
+    document.getElementById('modal-total').innerText = totalPrice.toLocaleString();
+    document.getElementById('checkout-modal').classList.remove('hidden');
+});
 
 function closeCheckout() {
-    const checkoutModal = document.getElementById('checkout-modal');
-    if (checkoutModal) checkoutModal.classList.add('hidden');
+    document.getElementById('checkout-modal').classList.add('hidden');
     resetCheckoutUI();
 }
 
 function resetCheckoutUI() {
-    const paymentForm = document.getElementById('payment-form');
-    const paymentStatus = document.getElementById('payment-status');
-    const phoneInput = document.getElementById('phone-number');
-
-    if (paymentForm) paymentForm.classList.remove('hidden');
-    if (paymentStatus) paymentStatus.classList.add('hidden');
-    if (phoneInput) phoneInput.value = '';
+    document.getElementById('payment-form').classList.remove('hidden');
+    document.getElementById('payment-status').classList.add('hidden');
+    document.getElementById('phone-number').value = '';
 }
 
 function simulateSTKPush() {
-    const phoneInput = document.getElementById('phone-number');
-    const phone = phoneInput ? phoneInput.value : '';
-    if (!phone || phone.replace(/\D/g, '').length < 10) {
+    const phone = document.getElementById('phone-number').value;
+    if (phone.length < 10) {
         alert("Please enter a valid 10-digit phone number.");
         return;
     }
@@ -196,29 +126,26 @@ function simulateSTKPush() {
     const form = document.getElementById('payment-form');
     const status = document.getElementById('payment-status');
     
-    if (form) form.classList.add('hidden');
-    if (status) status.classList.remove('hidden');
+    form.classList.add('hidden');
+    status.classList.remove('hidden');
 
-    // Step 1: Processing
-    if (status) status.innerHTML = `<p class="text-slate-600 font-semibold animate-pulse">Initiating STK Push...</p>`;
+    status.innerHTML = `<p class="text-slate-600 font-bold text-lg animate-pulse">Initiating STK Push...</p>`;
 
-    // Step 2: Awaiting PIN
     setTimeout(() => {
-        if (status) status.innerHTML = `<p class="text-blue-600 font-semibold">Check your phone ( ${phone} ) and enter your M-Pesa PIN.</p>`;
+        status.innerHTML = `<p class="text-slate-800 font-semibold text-lg">Check your phone ( ${phone} ) and enter your M-Pesa PIN.</p>`;
     }, 2000);
 
-    // Step 3: Success & Cart Clear
     setTimeout(() => {
-        if (status) {
-            status.innerHTML = `
-                <div class="text-green-500 text-4xl mb-2">✓</div>
-                <p class="text-green-600 font-bold text-lg">Payment Successful!</p>
-                <p class="text-sm text-slate-500 mt-2">Transaction ID: ${Math.random().toString(36).substring(2, 10).toUpperCase()}</p>
-            `;
-        }
-        cart = []; // Clear the cart
-        updateCartUI(); // Reset header numbers
-        
-        setTimeout(closeCheckout, 4000); // Auto-close modal after 4 seconds
+        status.innerHTML = `
+            <div class="text-green-500 text-6xl mb-4">✓</div>
+            <p class="text-green-600 font-black text-2xl">Payment Successful!</p>
+            <p class="text-sm text-slate-500 mt-2 font-mono bg-slate-50 py-2 rounded">TXN ID: ${Math.random().toString(36).substring(2, 10).toUpperCase()}</p>
+        `;
+        cart = [];
+        updateCartUI();
+        setTimeout(closeCheckout, 5000); 
     }, 6000);
 }
+
+// Initialize
+document.addEventListener('DOMContentLoaded', renderProducts);
