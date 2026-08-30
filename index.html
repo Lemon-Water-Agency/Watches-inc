@@ -7,23 +7,52 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- FIXED LAYER: 3D Canvas sits behind foregrounds but above backgrounds -->
+    <div id="canvas-container" class="fixed-canvas-wrapper">
+        <canvas id="watch-canvas"></canvas>
+    </div>
 
-    <section class="hero-container">
-        <!-- Layer 1: Solid Background Text -->
+    <!-- SCROLLING LAYER 1: Hero Section -->
+    <section class="hero-section dark-theme">
+        <!-- Background Text (Behind Watch) -->
         <div class="hero-text-wrapper background-text">
             <h1 class="hero-title">Watches.inc</h1>
             <p class="hero-subtitle">A curated collection of premium timepieces. Unmatched style, minimalist design, and everyday elegance.</p>
         </div>
 
-        <!-- Layer 2: 3D Canvas -->
-        <div id="canvas-container" class="hero-canvas-wrapper">
-            <canvas id="watch-canvas"></canvas>
-        </div>
-
-        <!-- Layer 3: Foreground Outline Text (For Legibility) -->
+        <!-- Foreground Text (In Front of Watch) -->
         <div class="hero-text-wrapper foreground-text">
             <h1 class="hero-title outline">Watches.inc</h1>
             <p class="hero-subtitle transparent">A curated collection of premium timepieces. Unmatched style, minimalist design, and everyday elegance.</p>
+        </div>
+    </section>
+
+    <!-- SCROLLING LAYER 2: The Organic Curve -->
+    <div class="curve-divider">
+        <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+            <path fill="#ffffff" fill-opacity="1" d="M0,64L80,85.3C160,107,320,149,480,149.3C640,149,800,107,960,90.7C1120,75,1280,85,1360,90.7L1440,96L1440,200L1360,200C1280,200,1120,200,960,200C800,200,640,200,480,200C320,200,160,200,80,200L0,200Z"></path>
+        </svg>
+    </div>
+
+    <!-- SCROLLING LAYER 3: What We Do / Collection -->
+    <section class="collection-section light-theme">
+        <div class="collection-grid">
+            <!-- Left Column: Empty space for the fixed 3D watch to land -->
+            <div class="grid-spacer"></div>
+            
+            <!-- Right Column: Content -->
+            <div class="grid-content">
+                <h2 class="section-heading">NEW COLLECTION</h2>
+                <div class="heading-accent-line"></div>
+                <p class="section-paragraph">
+                    Offers a wide assortment of luxury timepieces to suit any wrist. Discover the broad selection of Watches.inc models to find a perfect combination of style and functionality.
+                </p>
+                
+                <div class="media-cards">
+                    <div class="card placeholder-img-1"></div>
+                    <div class="card placeholder-img-2"></div>
+                </div>
+            </div>
         </div>
     </section>
 
