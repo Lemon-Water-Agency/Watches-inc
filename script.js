@@ -143,15 +143,19 @@ function animate() {
         const startX = 0;
         const startY = -0.5;
         const startScale = 30;
-        const startRotX = Math.PI / 6;
+        // Base rotations to force the watch upright
+        const startRotX = 0; // Adjust if the watch is tilting too far forward/backward
         const startRotY = 0;
-
+        const startRotZ = -Math.PI / 2; // -90 degrees. Change to Math.PI / 2 if upside down.
+        
         // Collection State (Scroll 1) -> Moving bottom-left, scaling up, rotating
         const endX = -2.5; 
         const endY = -1.5;
         const endScale = 55;
+        
         const endRotX = 0;
         const endRotY = Math.PI / 4; // Turn the watch to show the side profile
+        const endRotZ = -Math.PI / 2; // Match startRotZ so the watch doesn't spin like a wheel on scroll
 
         // Apply Linear Interpolation (Lerp) based on scroll
         watchModel.position.x = startX + (endX - startX) * scrollPercent;
@@ -161,6 +165,7 @@ function animate() {
         watchModel.scale.set(currentScale, currentScale, currentScale);
 
         watchModel.rotation.x = startRotX + (endRotX - startRotX) * scrollPercent;
+        watchModel.rotation.z = startRotZ + (endRotZ - startRotZ) * scrollPercent;
         
         // Add the idle sway on top of the scroll rotation
         const time = Date.now() * 0.001; 
