@@ -133,8 +133,13 @@ function animate() {
     // Custom sway animation
     if (watchModel) {
         const time = Date.now() * 0.001; 
-        watchModel.rotation.y = Math.sin(time * 0.5) * 0.4 - (Math.PI / 12);
-        watchModel.position.y = Math.sin(time * 1.2) * 0.05 - 0.5;
+         watchModel.rotation.y = Math.sin(time * 0.8) * 0.15;
+        
+        // Subtle vertical floating bob
+        watchModel.position.y = Math.sin(time * 1.2) * 0.03 - 0.5;
+            
+        //watchModel.rotation.y = Math.sin(time * 0.5) * 0.4 - (Math.PI / 12);
+        //watchModel.position.y = Math.sin(time * 1.2) * 0.05 - 0.5;
 
         const targetRotY = mouse.x * (Math.PI / 8); // Max ±22.5° horizontal tilt
         const targetRotX = (Math.PI / 6) - (mouse.y * (Math.PI / 12)); // Subtle vertical tilt
