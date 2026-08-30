@@ -137,26 +137,29 @@ function animate() {
         // Clamp scroll percent between 0 and 1
         scrollPercent = Math.max(0, Math.min(1, scrollPercent));
 
-        // --- INTERPOLATION TARGETS ---
-                
-        // Hero State (Scroll 0) - Centered and upright
+       // --- INTERPOLATION TARGETS ---
+        
+        // Hero State (Scroll 0) - Centered and upright, facing the camera
         const startX = 0;
         const startY = -0.5;
         const startScale = 30;
         
-        // Adjusted base rotations for the hero section
-        const startRotX = Math.PI / 8;  // Slight tilt back so the face looks up slightly
-        const startRotY = 0;            // Facing dead center
-        const startRotZ = 0;            // CRITICAL: Set to 0 to stop it from laying on its side
+        // 🚨 CORRECTED ROTATIONS 🚨
+        // Math.PI / 2 tips the model 90 degrees forward so the face looks at the camera.
+        // We subtract a tiny bit (0.1) so it leans back just slightly for a premium look.
+        const startRotX = (Math.PI / 2) - 0.1; 
+        const startRotY = 0;            
+        const startRotZ = 0;            
 
         // Collection State (Scroll 1) - Bottom left, scaled up, angled right
         const endX = -2.5; 
         const endY = -1.5;
         const endScale = 55;
         
-        const endRotX = 0;              // Stands up straighter
-        const endRotY = Math.PI / 6;    // Turns slightly to the right to show the profile
-        const endRotZ = 0;              // CRITICAL: Keeps it upright during the transition
+        // Match the X and Z rotations to keep it standing up during scroll
+        const endRotX = Math.PI / 2;    
+        const endRotY = Math.PI / 6;    // Turns slightly right
+        const endRotZ = 0;              
 
         // Apply Linear Interpolation (Lerp) based on scroll
         watchModel.position.x = startX + (endX - startX) * scrollPercent;
