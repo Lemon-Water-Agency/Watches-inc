@@ -136,11 +136,7 @@ function animate() {
         //watchModel.rotation.y = Math.sin(time * 0.5) * 0.4 - (Math.PI / 12);
         //watchModel.position.y = Math.sin(time * 1.2) * 0.05 - 0.5;
 
-        const targetRotY = mouse.x * (Math.PI / 8); // Max ±22.5° horizontal tilt
-        const targetRotX = (Math.PI / 6) - (mouse.y * (Math.PI / 12)); // Subtle vertical tilt
-    
-        watchModel.rotation.y += (targetRotY - watchModel.rotation.y) * 0.05;
-        watchModel.rotation.x += (targetRotX - watchModel.rotation.x) * 0.05;
+      
     }
 
     controls.update(); 
