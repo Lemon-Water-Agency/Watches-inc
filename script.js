@@ -42,17 +42,22 @@ scene.add(directionalLight);
 // 3. User Controls & Limits
 // ==========================================
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true; 
+controls.enableDamping = true;
 controls.dampingFactor = 0.05;
-controls.enablePan = false;    
-controls.enableZoom = false;   
-controls.autoRotate = false; // Disabled for custom sway animation
+controls.enablePan = false;
+controls.enableZoom = false;
 
-// Restrict viewing angles to the front face
-controls.minAzimuthAngle = -Math.PI / 4; 
-controls.maxAzimuthAngle = Math.PI / 4;  
-controls.minPolarAngle = Math.PI / 3;        
-controls.maxPolarAngle = Math.PI / 2 + 0.2;  
+// --- HORIZONTAL LIMITS (AZIMUTH) ---
+// Restrict horizontal rotation to a tight ±20° cone (approx ±0.35 rad)
+// Decreasing this value narrows the view further; 0 locks it completely.
+controls.minAzimuthAngle = -Math.PI / 9; // -20 degrees
+controls.maxAzimuthAngle = Math.PI / 9;  // +20 degrees
+
+// --- VERTICAL LIMITS (POLAR) ---
+// Math.PI / 2 is level with the center. Clamping between ~75° and ~95°
+// prevents looking from too high above or under the bezel.
+controls.minPolarAngle = Math.PI / 2.4; // ~75 degrees
+controls.maxPolarAngle = Math.PI / 1.9; // ~95 degrees 
 
 // ==========================================
 // 4. Model Loading & Material Override
@@ -115,6 +120,13 @@ window.addEventListener('resize', () => {
 // ==========================================
 // 6. Animation Loop (Swaying)
 // ==========================================
+const mouse = { x: 0, y: 0 };
+
+window.addEventListener('mousemove', (event) => {
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+});
+
 function animate() {
     requestAnimationFrame(animate);
     
@@ -123,6 +135,12 @@ function animate() {
         const time = Date.now() * 0.001; 
         watchModel.rotation.y = Math.sin(time * 0.5) * 0.4 - (Math.PI / 12);
         watchModel.position.y = Math.sin(time * 1.2) * 0.05 - 0.5;
+
+        const targetRotY = mouse.x * (Math.PI / 8); // Max ±22.5° horizontal tilt
+        const targetRotX = (Math.PI / 6) - (mouse.y * (Math.PI / 12)); // Subtle vertical tilt
+    
+        watchModel.rotation.y += (targetRotY - watchModel.rotation.y) * 0.05;
+        watchModel.rotation.x += (targetRotX - watchModel.rotation.x) * 0.05;
     }
 
     controls.update(); 
