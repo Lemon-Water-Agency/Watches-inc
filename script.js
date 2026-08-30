@@ -138,24 +138,25 @@ function animate() {
         scrollPercent = Math.max(0, Math.min(1, scrollPercent));
 
         // --- INTERPOLATION TARGETS ---
-        
-        // Hero State (Scroll 0)
+                
+        // Hero State (Scroll 0) - Centered and upright
         const startX = 0;
         const startY = -0.5;
         const startScale = 30;
-        // Base rotations to force the watch upright
-        const startRotX = 0; // Adjust if the watch is tilting too far forward/backward
-        const startRotY = 0;
-        const startRotZ = Math.PI / 2; // -90 degrees. Change to Math.PI / 2 if upside down.
         
-        // Collection State (Scroll 1) -> Moving bottom-left, scaling up, rotating
+        // Adjusted base rotations for the hero section
+        const startRotX = Math.PI / 8;  // Slight tilt back so the face looks up slightly
+        const startRotY = 0;            // Facing dead center
+        const startRotZ = 0;            // CRITICAL: Set to 0 to stop it from laying on its side
+
+        // Collection State (Scroll 1) - Bottom left, scaled up, angled right
         const endX = -2.5; 
         const endY = -1.5;
         const endScale = 55;
         
-        const endRotX = 0;
-        const endRotY = Math.PI / 4; // Turn the watch to show the side profile
-        const endRotZ = -Math.PI / 2; // Match startRotZ so the watch doesn't spin like a wheel on scroll
+        const endRotX = 0;              // Stands up straighter
+        const endRotY = Math.PI / 6;    // Turns slightly to the right to show the profile
+        const endRotZ = 0;              // CRITICAL: Keeps it upright during the transition
 
         // Apply Linear Interpolation (Lerp) based on scroll
         watchModel.position.x = startX + (endX - startX) * scrollPercent;
@@ -164,10 +165,11 @@ function animate() {
         const currentScale = startScale + (endScale - startScale) * scrollPercent;
         watchModel.scale.set(currentScale, currentScale, currentScale);
 
+        // Apply axis rotations
         watchModel.rotation.x = startRotX + (endRotX - startRotX) * scrollPercent;
         watchModel.rotation.z = startRotZ + (endRotZ - startRotZ) * scrollPercent;
         
-        // Add the idle sway on top of the scroll rotation
+        // Add the idle sway on top of the scroll rotation (Y-axis)
         const time = Date.now() * 0.001; 
         const sway = Math.sin(time * 0.5) * 0.15;
         watchModel.rotation.y = (startRotY + (endRotY - startRotY) * scrollPercent) + sway;
