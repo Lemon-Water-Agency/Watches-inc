@@ -66,9 +66,9 @@ loader.load(
         watchModel = gltf.scene;
         
         // Scale and Position
-        const scaleFactor = 30; 
+        const scaleFactor = 50; 
         watchModel.scale.set(scaleFactor, scaleFactor, scaleFactor); 
-        watchModel.position.set(0, -0.5, 0); 
+        watchModel.position.set(0, 0.5, 0); 
         
         // Initial Rotation
         watchModel.rotation.x = Math.PI / 6; 
