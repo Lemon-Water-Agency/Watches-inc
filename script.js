@@ -146,7 +146,7 @@ function animate() {
         // Base rotations to force the watch upright
         const startRotX = 0; // Adjust if the watch is tilting too far forward/backward
         const startRotY = 0;
-        const startRotZ = -Math.PI / 2; // -90 degrees. Change to Math.PI / 2 if upside down.
+        const startRotZ = Math.PI / 2; // -90 degrees. Change to Math.PI / 2 if upside down.
         
         // Collection State (Scroll 1) -> Moving bottom-left, scaling up, rotating
         const endX = -2.5; 
