@@ -4,6 +4,45 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 // ==========================================
+// DATA LAYER: Product Information
+// ==========================================
+
+// Data for Act II: The Flagship Deep Dive
+const flagshipWatch = {
+    id: 'flagship-1',
+    brand: 'CARREN WATCHES',
+    model: 'PRC 100 TITANIUM',
+    type: '(CHRONOGRAPH)',
+    description: 'Relive the original era with our newest models. The vintage look has been enhanced with a slimmer profile and a Master Chronometer upgrade.',
+    price: '$2,450',
+    specs: {
+        size: 'GENT',
+        caseMaterial: 'TITANIUM',
+        waterResistance: '10 BAR (100M)',
+        glassMaterial: 'SAPPHIRE CRYSTAL',
+        dialColor: 'ANTHRACITE',
+        dialType: 'INDEX',
+        braceletMaterial: 'TITANIUM',
+        movementCaliber: 'G10.211',
+        movementType: 'QUARTZ'
+    },
+    thumbnails: [
+        'assets/images/thumb-front.png',
+        'assets/images/thumb-side.png',
+        'assets/images/thumb-back.png'
+    ]
+};
+
+// Data for Act III: The Light Catalog Grid
+const catalogWatches = [
+    { id: 'cat-1', brand: 'Rolex Daytona', price: '$17,551', image: 'assets/images/rolex.png' },
+    { id: 'cat-2', brand: 'Seiko Watch', price: '$4,521', image: 'assets/images/seiko.png' },
+    { id: 'cat-3', brand: 'Citizen Watches', price: '$8,266', image: 'assets/images/citizen.png' }
+];
+
+
+
+// ==========================================
 // 1. Core Setup
 // ==========================================
 const canvas = document.getElementById('watch-canvas');
