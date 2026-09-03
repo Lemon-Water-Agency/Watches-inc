@@ -40,6 +40,48 @@ const catalogWatches = [
     { id: 'cat-3', brand: 'Citizen Watches', price: '$8,266', image: 'assets/images/citizen.png' }
 ];
 
+// ==========================================
+// DOM MANIPULATION: Populate Act II
+// ==========================================
+
+function renderFlagshipData() {
+    // 1. Populate Text Elements
+    document.getElementById('fs-brand').textContent = flagshipWatch.brand;
+    document.getElementById('fs-model').textContent = flagshipWatch.model;
+    document.getElementById('fs-type').textContent = flagshipWatch.type;
+
+    // 2. Populate the Specification Table (<dl>)
+    const specList = document.getElementById('fs-spec-list');
+    let specHTML = '';
+    
+    // Loop through the specs object and generate <dt> and <dd> tags
+    for (const [key, value] of Object.entries(flagshipWatch.specs)) {
+        // Convert camelCase keys (like 'caseMaterial') to Title Case ('Case Material')
+        const formattedKey = key.replace(/([A-Z])/g, ' $1').trim();
+        
+        specHTML += `
+            <dt>${formattedKey}</dt>
+            <dd>${value}</dd>
+        `;
+    }
+    specList.innerHTML = specHTML;
+
+    // 3. Populate Thumbnails
+    const thumbnailContainer = document.getElementById('fs-thumbnails');
+    let thumbHTML = '';
+    
+    flagshipWatch.thumbnails.forEach((src, index) => {
+        // Make the first thumbnail 'active' by default
+        const activeClass = index === 0 ? 'active' : '';
+        thumbHTML += `<img src="${src}" class="${activeClass}" alt="Watch view ${index + 1}" data-index="${index}">`;
+    });
+    
+    thumbnailContainer.innerHTML = thumbHTML;
+}
+
+// Execute the function to inject the data into the page
+renderFlagshipData();
+
 
 
 // ==========================================
