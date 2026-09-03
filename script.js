@@ -233,7 +233,7 @@ function animate() {
         const startRotZ = 0;            
 
         // Collection State (Scroll 1) - Bottom left, scaled up, angled right
-        const endX = -2.5; 
+        const endX = 2.5; 
         const endY = -1.5;
         const endScale = 55;
         
