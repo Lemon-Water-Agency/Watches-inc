@@ -7,35 +7,51 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
+    <!-- ==========================================
+         ACT I: HERO SECTION (Dual-Layer 3D Sandwich)
+         ========================================== -->
     <section class="hero-section dark-theme">
         
         <!-- LAYER 1: Background (Solid Text) -->
-        <!-- z-index: 1 pushes it behind the canvas -->
         <div class="hero-text-wrapper background-text" style="z-index: 1;">
             <h1 class="hero-title">WATCHES.INC</h1>
             <p class="hero-subtitle">A curated collection of premium timepieces. Unmatched style, minimalist design, and everyday elegance.</p>
         </div>
 
         <!-- LAYER 2: 3D Canvas (Middle) -->
-        <!-- z-index: 2 sandwiches it between the text layers -->
         <div id="canvas-container" class="fixed-canvas-wrapper" style="z-index: 2;">
             <canvas id="watch-canvas"></canvas>
         </div>
 
         <!-- LAYER 3: Foreground (Outlined Text) -->
-        <!-- z-index: 3 pulls it to the very front -->
-        <!-- pointer-events: none ensures you can still click/drag the 3D watch underneath it -->
+        <!-- pointer-events: none ensures the user can still interact with the 3D watch underneath -->
         <div class="hero-text-wrapper foreground-text" style="z-index: 3; pointer-events: none;">
             
-            <!-- Inline styles force the hollow outline effect -->
+            <!-- Inline styles guarantee the hollow outline effect renders correctly -->
             <h1 class="hero-title outline" style="color: transparent; -webkit-text-stroke: 2px #fff;">WATCHES.INC</h1>
             
-            <!-- Inline style hides the duplicate paragraph to prevent blurry rendering -->
+            <!-- Inline style hides the duplicate paragraph to prevent blurry text rendering -->
             <p class="hero-subtitle transparent" style="color: transparent;">A curated collection of premium timepieces. Unmatched style, minimalist design, and everyday elegance.</p>
         </div>
 
     </section>
 
+    <!-- ==========================================
+         ACT II: PRODUCT CATALOG (Lightweight SVG Grid)
+         ========================================== -->
+    <section class="product-section">
+        <div class="section-header">
+            <h2>CURRENT COLLECTION</h2>
+        </div>
+        
+        <!-- JavaScript will inject the SVG product cards into this container -->
+        <div class="product-grid" id="product-grid"></div>
+    </section>
+
+    <!-- ==========================================
+         SCRIPTS & DEPENDENCIES
+         ========================================== -->
     <!-- Three.js Import Map -->
     <script type="importmap">
       {
@@ -45,6 +61,8 @@
         }
       }
     </script>
+    
+    <!-- Application Logic -->
     <script type="module" src="script.js"></script>
 </body>
 </html>
