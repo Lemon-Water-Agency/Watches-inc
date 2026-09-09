@@ -4,87 +4,6 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 // ==========================================
-// DATA LAYER: Product Information
-// ==========================================
-
-// Data for Act II: The Flagship Deep Dive
-const flagshipWatch = {
-    id: 'flagship-1',
-    brand: 'CARREN WATCHES',
-    model: 'PRC 100 TITANIUM',
-    type: '(CHRONOGRAPH)',
-    description: 'Relive the original era with our newest models. The vintage look has been enhanced with a slimmer profile and a Master Chronometer upgrade.',
-    price: '$2,450',
-    specs: {
-        size: 'GENT',
-        caseMaterial: 'TITANIUM',
-        waterResistance: '10 BAR (100M)',
-        glassMaterial: 'SAPPHIRE CRYSTAL',
-        dialColor: 'ANTHRACITE',
-        dialType: 'INDEX',
-        braceletMaterial: 'TITANIUM',
-        movementCaliber: 'G10.211',
-        movementType: 'QUARTZ'
-    },
-    thumbnails: [
-        'assets/images/thumb-front.png',
-        'assets/images/thumb-side.png',
-        'assets/images/thumb-back.png'
-    ]
-};
-
-// Data for Act III: The Light Catalog Grid
-const catalogWatches = [
-    { id: 'cat-1', brand: 'Rolex Daytona', price: '$17,551', image: 'assets/images/rolex.png' },
-    { id: 'cat-2', brand: 'Seiko Watch', price: '$4,521', image: 'assets/images/seiko.png' },
-    { id: 'cat-3', brand: 'Citizen Watches', price: '$8,266', image: 'assets/images/citizen.png' }
-];
-
-// ==========================================
-// DOM MANIPULATION: Populate Act II
-// ==========================================
-
-function renderFlagshipData() {
-    // 1. Populate Text Elements
-    document.getElementById('fs-brand').textContent = flagshipWatch.brand;
-    document.getElementById('fs-model').textContent = flagshipWatch.model;
-    document.getElementById('fs-type').textContent = flagshipWatch.type;
-
-    // 2. Populate the Specification Table (<dl>)
-    const specList = document.getElementById('fs-spec-list');
-    let specHTML = '';
-    
-    // Loop through the specs object and generate <dt> and <dd> tags
-    for (const [key, value] of Object.entries(flagshipWatch.specs)) {
-        // Convert camelCase keys (like 'caseMaterial') to Title Case ('Case Material')
-        const formattedKey = key.replace(/([A-Z])/g, ' $1').trim();
-        
-        specHTML += `
-            <dt>${formattedKey}</dt>
-            <dd>${value}</dd>
-        `;
-    }
-    specList.innerHTML = specHTML;
-
-    // 3. Populate Thumbnails
-    const thumbnailContainer = document.getElementById('fs-thumbnails');
-    let thumbHTML = '';
-    
-    flagshipWatch.thumbnails.forEach((src, index) => {
-        // Make the first thumbnail 'active' by default
-        const activeClass = index === 0 ? 'active' : '';
-        thumbHTML += `<img src="${src}" class="${activeClass}" alt="Watch view ${index + 1}" data-index="${index}">`;
-    });
-    
-    thumbnailContainer.innerHTML = thumbHTML;
-}
-
-// Execute the function to inject the data into the page
-renderFlagshipData();
-
-
-
-// ==========================================
 // 1. Core Setup
 // ==========================================
 const canvas = document.getElementById('watch-canvas');
@@ -206,57 +125,29 @@ window.addEventListener('resize', () => {
 // ==========================================
 // 6. Scroll Animation Interpolation
 // ==========================================
+// ==========================================
+// 6. Animation Loop (Clean Hero Setup)
+// ==========================================
 function animate() {
     requestAnimationFrame(animate);
     
     if (watchModel) {
-        // Calculate how far the user has scrolled down the page
-        const scrollY = window.scrollY;
-        const maxScroll = document.body.scrollHeight - window.innerHeight;
-        let scrollPercent = scrollY / maxScroll;
+        // Lock to the exact center of the screen
+        watchModel.position.set(0, -0.5, 0);
+        watchModel.scale.set(30, 30, 30);
         
-        // Clamp scroll percent between 0 and 1
-        scrollPercent = Math.max(0, Math.min(1, scrollPercent));
-
-       // --- INTERPOLATION TARGETS ---
+        // Base upright rotations
+        const baseRotX = (Math.PI / 2) - 0.1; 
+        const baseRotY = 0;            
+        const baseRotZ = 0; 
         
-        // Hero State (Scroll 0) - Centered and upright, facing the camera
-        const startX = 0;
-        const startY = -0.5;
-        const startScale = 30;
-        
-        // 🚨 CORRECTED ROTATIONS 🚨
-        // Math.PI / 2 tips the model 90 degrees forward so the face looks at the camera.
-        // We subtract a tiny bit (0.1) so it leans back just slightly for a premium look.
-        const startRotX = (Math.PI / 2) - 0.1; 
-        const startRotY = 0;            
-        const startRotZ = 0;            
-
-        // Collection State (Scroll 1) - Bottom left, scaled up, angled right
-        const endX = 2.5; 
-        const endY = -1.5;
-        const endScale = 55;
-        
-        // Match the X and Z rotations to keep it standing up during scroll
-        const endRotX = Math.PI / 2;    
-        const endRotY = Math.PI / 6;    // Turns slightly right
-        const endRotZ = 0;              
-
-        // Apply Linear Interpolation (Lerp) based on scroll
-        watchModel.position.x = startX + (endX - startX) * scrollPercent;
-        watchModel.position.y = startY + (endY - startY) * scrollPercent;
-        
-        const currentScale = startScale + (endScale - startScale) * scrollPercent;
-        watchModel.scale.set(currentScale, currentScale, currentScale);
-
-        // Apply axis rotations
-        watchModel.rotation.x = startRotX + (endRotX - startRotX) * scrollPercent;
-        watchModel.rotation.z = startRotZ + (endRotZ - startRotZ) * scrollPercent;
-        
-        // Add the idle sway on top of the scroll rotation (Y-axis)
+        // Add the premium idle sway
         const time = Date.now() * 0.001; 
         const sway = Math.sin(time * 0.5) * 0.15;
-        watchModel.rotation.y = (startRotY + (endRotY - startRotY) * scrollPercent) + sway;
+        
+        watchModel.rotation.x = baseRotX;
+        watchModel.rotation.y = baseRotY + sway;
+        watchModel.rotation.z = baseRotZ;
     }
 
     controls.update(); 
