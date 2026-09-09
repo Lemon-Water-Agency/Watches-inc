@@ -7,21 +7,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- FIXED LAYER: 3D Canvas -->
-    <div id="canvas-container" class="fixed-canvas-wrapper">
-        <canvas id="watch-canvas"></canvas>
-    </div>
-
-    <!-- SCROLLING LAYER 1: Hero Section -->
     <section class="hero-section dark-theme">
+        
+        <!-- LAYER 1: Solid Background Text -->
         <div class="hero-text-wrapper background-text">
-            <h1 class="hero-title">Watches.inc</h1>
+            <h1 class="hero-title">WATCHES.INC</h1>
             <p class="hero-subtitle">A curated collection of premium timepieces. Unmatched style, minimalist design, and everyday elegance.</p>
         </div>
+
+        <!-- LAYER 2: The 3D Canvas -->
+        <div id="canvas-container" class="fixed-canvas-wrapper">
+            <canvas id="watch-canvas"></canvas>
+        </div>
+
+        <!-- LAYER 3: Outlined Foreground Text -->
         <div class="hero-text-wrapper foreground-text">
-            <h1 class="hero-title outline">Watches.inc</h1>
+            <h1 class="hero-title outline">WATCHES.INC</h1>
+            <!-- The transparent class keeps the spacing identical without showing the text twice -->
             <p class="hero-subtitle transparent">A curated collection of premium timepieces. Unmatched style, minimalist design, and everyday elegance.</p>
         </div>
+
     </section>
 
     <!-- Three.js Import Map -->
