@@ -9,22 +9,29 @@
 <body>
     <section class="hero-section dark-theme">
         
-        <!-- LAYER 1: Solid Background Text -->
-        <div class="hero-text-wrapper background-text">
+        <!-- LAYER 1: Background (Solid Text) -->
+        <!-- z-index: 1 pushes it behind the canvas -->
+        <div class="hero-text-wrapper background-text" style="z-index: 1;">
             <h1 class="hero-title">WATCHES.INC</h1>
             <p class="hero-subtitle">A curated collection of premium timepieces. Unmatched style, minimalist design, and everyday elegance.</p>
         </div>
 
-        <!-- LAYER 2: The 3D Canvas -->
-        <div id="canvas-container" class="fixed-canvas-wrapper">
+        <!-- LAYER 2: 3D Canvas (Middle) -->
+        <!-- z-index: 2 sandwiches it between the text layers -->
+        <div id="canvas-container" class="fixed-canvas-wrapper" style="z-index: 2;">
             <canvas id="watch-canvas"></canvas>
         </div>
 
-        <!-- LAYER 3: Outlined Foreground Text -->
-        <div class="hero-text-wrapper foreground-text">
-            <h1 class="hero-title outline">WATCHES.INC</h1>
-            <!-- The transparent class keeps the spacing identical without showing the text twice -->
-            <p class="hero-subtitle transparent">A curated collection of premium timepieces. Unmatched style, minimalist design, and everyday elegance.</p>
+        <!-- LAYER 3: Foreground (Outlined Text) -->
+        <!-- z-index: 3 pulls it to the very front -->
+        <!-- pointer-events: none ensures you can still click/drag the 3D watch underneath it -->
+        <div class="hero-text-wrapper foreground-text" style="z-index: 3; pointer-events: none;">
+            
+            <!-- Inline styles force the hollow outline effect -->
+            <h1 class="hero-title outline" style="color: transparent; -webkit-text-stroke: 2px #fff;">WATCHES.INC</h1>
+            
+            <!-- Inline style hides the duplicate paragraph to prevent blurry rendering -->
+            <p class="hero-subtitle transparent" style="color: transparent;">A curated collection of premium timepieces. Unmatched style, minimalist design, and everyday elegance.</p>
         </div>
 
     </section>
