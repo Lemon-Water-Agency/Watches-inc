@@ -16,24 +16,36 @@ body {
 }
 
 /* ==========================================
-   2. FIXED 3D CANVAS LAYER
+   2. 3D CANVAS LAYER (CONTAINED)
    ========================================== */
-.fixed-canvas-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
+.hero-section {
+    position: relative; /* CRITICAL: This traps the absolute canvas inside it */
     width: 100vw;
     height: 100vh;
-    z-index: 2; /* Sits BETWEEN the background and foreground text */
-    pointer-events: none; /* Allows user to click through to any buttons if needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #111;
+    overflow: hidden; /* Prevents 3D model from bleeding out */
+}
+
+.fixed-canvas-wrapper {
+    position: absolute; /* Changed from fixed. It now scrolls up with the page. */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
 }
 
 #watch-canvas {
     width: 100%;
     height: 100%;
+    pointer-events: auto;
     outline: none;
-    pointer-events: auto; /* Re-enables OrbitControls dragging on the watch itself */
 }
+
 
 /* ==========================================
    3. HERO SECTION & DUAL-LAYER TEXT
@@ -97,4 +109,106 @@ body {
 /* Hides the subtitle in the foreground so it doesn't double-render */
 .hero-subtitle.transparent {
     color: transparent;
+}
+
+
+/* ==========================================
+   4. PRODUCT CATALOG (BENTO BOX LAYOUT)
+   ========================================== */
+.product-section {
+    position: relative;
+    z-index: 4;
+    background-color: #0a0a0a; /* Slightly darker than hero for contrast */
+    padding: 10vh 5vw;
+    min-height: 100vh;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+/* The Bento Grid */
+.product-grid {
+    display: grid;
+    /* Auto-filling grid for responsive bento boxes */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* The Bento "Box" */
+.product-card {
+    background-color: #161616;
+    border: 1px solid #222;
+    border-radius: 16px; /* Smooth bento corners */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    background-color: #1f1f1f;
+    border-color: #444;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* SVG Container inside the Box */
+.product-svg-container {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Square ratio fits bento style best */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: radial-gradient(circle at center, #222 0%, #161616 70%);
+}
+
+.watch-wireframe {
+    width: 100%;
+    height: 100%;
+    max-height: 220px;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.product-card:hover .watch-wireframe {
+    color: #fff;
+}
+
+.wireframe-dim { opacity: 0.3; }
+.wireframe-bright { opacity: 0.7; }
+
+/* Info Section inside the Box */
+.product-info {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid #222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-info h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #eee;
+    margin: 0;
+}
+
+.product-info p {
+    color: #aaa;
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0;
 }
