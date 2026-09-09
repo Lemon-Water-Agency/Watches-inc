@@ -212,3 +212,35 @@ body {
     font-weight: 400;
     margin: 0;
 }
+
+
+/* ==========================================
+   5. MOBILE RESPONSIVENESS
+   ========================================== */
+@media (max-width: 768px) {
+    /* Prevent the long brand name from causing horizontal scrolling */
+    .hero-title {
+        font-size: clamp(2.5rem, 12vw, 4rem); 
+        letter-spacing: 0px; /* Tighter spacing for narrow screens */
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+
+    /* Stack the Bento boxes into a single column */
+    .product-grid {
+        grid-template-columns: 1fr; /* Overrides the minmax rule */
+        gap: 15px;
+    }
+
+    /* Reduce side padding for maximum screen real estate */
+    .product-section {
+        padding: 5vh 20px; 
+    }
+    
+    .section-header h2 {
+        font-size: 2rem;
+    }
+}
