@@ -72,8 +72,7 @@ loader.load(
         watchModel = gltf.scene;
         
         // Scale and Position
-        const isMobile = window.innerWidth < 768;
-        const watchScale = isMobile ? 18 : 50;
+        const scaleFactor = 50; 
         watchModel.scale.set(scaleFactor, scaleFactor, scaleFactor); 
         watchModel.position.set(0, 5.5, 0); 
         
@@ -114,19 +113,9 @@ loader.load(
 // 5. Responsiveness
 // ==========================================
 window.addEventListener('resize', () => {
-    // 1. Update Camera
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = container.clientWidth / container.clientHeight;
     camera.updateProjectionMatrix();
-    
-    // 2. Update Renderer
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    
-    // 3. Dynamically resize the watch if the user turns their phone/shrinks browser
-    if (watchModel) {
-        const isMobile = window.innerWidth < 768;
-        const watchScale = isMobile ? 18 : 30;
-        watchModel.scale.set(watchScale, watchScale, watchScale);
-    }
+    renderer.setSize(container.clientWidth, container.clientHeight);
 });
 
 
